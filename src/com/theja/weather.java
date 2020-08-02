@@ -13,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;  
 
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -34,10 +36,12 @@ public class weather extends HttpServlet {
 		sb.append("&appid=bb0c9ba8278ff5cfe5c0dbd617481bed");
 		
 
-        var url = sb.toString();
-        System.out.println(url);
+        String url = sb.toString();
+        url=url.replace(' ', '+');
         var req = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
         var client = HttpClient.newBuilder().build();
+        
+        
         HttpResponse<String> resp;
 		try {
 			resp = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -55,6 +59,15 @@ public class weather extends HttpServlet {
 		    Object objsys=JSONValue.parse(myresp.get("sys").toString()); 
 		    JSONObject sysresp = (JSONObject) objsys;
 		    request.setAttribute("country", sysresp.get("country"));
+		    
+		    Object objwind=JSONValue.parse(myresp.get("wind").toString()); 
+		    JSONObject windresp = (JSONObject) objwind;
+		    request.setAttribute("wind", windresp.get("speed"));
+		    
+		    Object coordwind=JSONValue.parse(myresp.get("coord").toString()); 
+		    JSONObject coordresp = (JSONObject) coordwind;
+		    request.setAttribute("lon", coordresp.get("lon"));
+		    request.setAttribute("lat", coordresp.get("lat"));
 		    
 		    Object objweather=JSONValue.parse(myresp.get("weather").toString());
 		    JSONArray weatherarrayresp=(JSONArray) objweather;
@@ -81,9 +94,7 @@ public class weather extends HttpServlet {
 		    request.setAttribute("date", datestr);
 		    
 		     System.out.println(myresp);
-		     System.out.println(weatherresp.get("icon"));
-		     System.out.println(imgpath);
-		     
+		      
 		     request.getRequestDispatcher("/result.jsp").forward(request,response);
 		     
 		     

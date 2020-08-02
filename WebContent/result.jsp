@@ -5,11 +5,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Climanow</title>
+<meta >
+
+<meta charset="ISO-8859-1" name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <title>Climanow</title>
+        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+        <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+        <style>
+            #windy {
+                width: 100%;
+                height: 300px;
+            }
+        </style>
 </head>
 
   <style><%@include file="/WEB-INF/css/result.css"%></style>
+  <body>
 <div class="topnav">
   <a href="dashboard.jsp" style="font-size:30px;color:white;text-align:left;">Climanow</a>
    <div class="search-container">
@@ -55,6 +66,7 @@
 	String country = request.getAttribute("country").toString();
 	String humidity = request.getAttribute("humidity").toString();
 	String date = request.getAttribute("date").toString();
+	String wind = request.getAttribute("wind").toString();
 	
 	String path=request.getParameter("img");
 	
@@ -97,17 +109,12 @@
       <div class="current-stats__label">Low</div>
     </div>
     <div>
-      <div class="current-stats__value">7mph</div>
+      <div class="current-stats__value"><%out.println(finalFeelsLike); %></div>
+      <div class="current-stats__label">Feels Like</div>
+      <div class="current-stats__value"><%out.println(wind+" "+"mph"); %></div>
       <div class="current-stats__label">Wind</div>
-      <div class="current-stats__value">0%</div>
-      <div class="current-stats__label">Rain</div>
     </div>
-    <div>
-      <div class="current-stats__value">05:27</div>
-      <div class="current-stats__label">Sunrise</div>
-      <div class="current-stats__value">20:57</div>
-      <div class="current-stats__label">Sunset</div>
-    </div>
+   
   </div>
 
   <div class="weather-by-hour">
@@ -322,10 +329,35 @@
 
 </main>
 
+<div id="windy"></div>
+        <script >
+            const options = {
+    // Required: API key
+    key: 'CB9zM1BVX8QoqKdXavUinECL4AYNQKJM', // REPLACE WITH YOUR KEY !!!
 
+    // Put additional console output
+    verbose: true,
 
+    // Optional: Initial state of the map
+    lat: "${lat}", 
+    lon: "${lon}",
+    zoom: 5,
+};
 
+// Initialize Windy API
+windyInit(options, windyAPI => {
+    // windyAPI is ready, and contain 'map', 'store',
+    // 'picker' and other usefull stuff
 
+    const { map } = windyAPI;
+    // .map is instance of Leaflet map
+
+    L.popup()
+        .setLatLng(["${lat}", "${lon}"])
+        .setContent('here')
+        .openOn(map);
+});
+        </script>
 
 </body>
 </html>
