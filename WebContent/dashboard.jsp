@@ -20,8 +20,8 @@
   
   <a href="#news" style="font-size:30px;color:white;text-align:left;">Climanow</a>
   <div style="padding-left:1200px;padding-top:10px;">
-  <a href="#news" style="color:white;text-align:right;">Log in</a>
-  <a href="#contact" style="color:white;">Sign up</a></div>
+  <a href="login.jsp" style="color:white;text-align:right;">Log in</a>
+  <a href="signup.jsp" style="color:white;">Sign up</a></div>
 </div>
     <div class="s130">
       <form action="weather" method="get">
@@ -43,23 +43,6 @@
         
       </form>
     </div>    
-    
-    
-    <% 
-    StringBuffer sb=new StringBuffer();
-	sb.append("https://api.openweathermap.org/data/2.5/weather?q=");
-	//sb.append(s);
-	sb.append("Delhi&appid=bb0c9ba8278ff5cfe5c0dbd617481bed");
-	
-
-    String url = sb.toString();
-    HttpRequest req = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
-    HttpClient client = HttpClient.newBuilder().build();
-    HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString());
-	
-    
-    %>
-    
     
   </body>
 </html>
