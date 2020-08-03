@@ -13,7 +13,7 @@
 <div class="container" id="container">
 <div class="form-container sign-up-container">
 
-<form action="">
+<form action="<%= request.getContextPath() %>/SignUp" method = "post">
 	<h1>Create Account</h1>
 	
 	<span>or use your email for registration</span>
@@ -24,7 +24,7 @@
 </form>
 </div>
 <div class="form-container sign-in-container">
-	<form action="#">
+	<form action="<%=request.getContextPath()%>/login" method = "post">
 		<h1>Sign In</h1>
 		
 	<span>or use your account</span>
@@ -32,7 +32,7 @@
 	<input type="password" name="password" placeholder="Password">
 	
 
-	<button>Sign In</button>
+	<button type="submit">Sign In</button>
 	</form>
 </div>
 <div class="overlay-container">
