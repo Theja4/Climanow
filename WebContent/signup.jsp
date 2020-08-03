@@ -25,16 +25,13 @@
 </form>
 </div>
 <div class="form-container sign-in-container">
-	<form action="#">
+	<form action="<%= request.getContextPath() %>/SignUp" method = "post">
 	
 	<h1>Create Account</h1>
 	<div class="social-container">
-		<a href="#" class="social"><i class="fa fa-facebook"></i></a>
-		<a href="#" class="social"><i class="fa fa-google"></i></a>
-		<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
 	</div>
 	<span>or use your email for registration</span>
-	<input type="text" name="name" placeholder="Name">
+	<input type="text" name="userName" placeholder="Name">
 	<input type="email" name="email" placeholder="Email">
 	<input type="password" name="password" placeholder="Password">
 	<button>SignUp</button>
@@ -45,7 +42,7 @@
 		<div class="overlay-panel overlay-left">
 		<h1>Welcome Back!</h1>
 			<p>To keep connected with us please login with your personal info</p>
-			<button class="ghost" id="signIn">Sign In</button>
+			<button  type="submit" class="ghost" id="signIn">Sign In</button>
 			
 		</div>
 		<div class="overlay-panel overlay-right">			
