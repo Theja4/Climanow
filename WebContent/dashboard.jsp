@@ -19,7 +19,7 @@
   <div class="topnav">
   
   <a href="#news" style="font-size:30px;color:white;text-align:left;">Climanow</a>
-  <div style="padding-left:1200px;padding-top:10px;">
+  <div style="padding-left:80%;padding-top:1%;">
   <a href="login.jsp" style="color:white;text-align:right;">Log in</a>
   <a href="signup.jsp" style="color:white;">Sign up</a></div>
 </div>

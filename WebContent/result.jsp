@@ -28,7 +28,7 @@
       <form action="weather" method="get">
         <div class="inner-form" >
           <div class="input-field first-wrap" >            
-            <input id="search" type="text" placeholder="Enter city" name="city" />    
+            <input id="search" type="text" placeholder=" Enter city" name="city" />    
             <button id ="searchButton" class="btn-search" type="submit">SEARCH</button>
           </div>      
        	</div>        
@@ -82,7 +82,7 @@
 
 
 
-<main class="main-container">
+<main class="main-container" style="padding-top:1%;">
 
   <div class="location-and-date">
     <h1 class="location-and-date__location"><%out.println(name +", "+ country); %></h1>
