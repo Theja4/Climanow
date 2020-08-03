@@ -203,7 +203,7 @@ h2 {
 
 /* location-and-date */
 .location-and-date {
-  width: 100%;
+  width: 60%;
 }
 
 .location-and-date__location {
@@ -218,7 +218,7 @@ h2 {
 .current-temperature {
   display: flex;
   margin-top: 0.25em;
-  width: 100%;
+  width: 60%;
 }
 
 .current-temperature__icon-container {
@@ -257,6 +257,22 @@ h2 {
   width: 100%;
   border-top: 1px solid rgba(255,255,255,0.5);
   border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+.current-stats2 {
+	float:right;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 1em;
+  width: 40%;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  
+}
+.testimg{
+	padding-top:7%;
+	padding-left:40%;
+	max-width: 40%;
+  height: auto;
 }
 
 @media screen and (min-width: 700px) {

@@ -42,6 +42,13 @@ public class weather extends HttpServlet {
         var client = HttpClient.newBuilder().build();
         
         
+        
+        
+        
+        
+        
+        
+        
         HttpResponse<String> resp;
 		try {
 			resp = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -95,7 +102,83 @@ public class weather extends HttpServlet {
 		    
 		     System.out.println(myresp);
 		      
-		     request.getRequestDispatcher("/result.jsp").forward(request,response);
+		     
+		     
+		     
+		     
+		     String lon=coordresp.get("lon").toString();
+		     String lat=coordresp.get("lat").toString();
+				StringBuffer sbuff=new StringBuffer();
+				sbuff.append("http://api.airvisual.com/v2/nearest_city?lat=");
+				sbuff.append(lat);
+				sbuff.append("&lon=");
+				sbuff.append(lon);
+				sbuff.append("&key=1bf8e445-9963-4988-a183-0f36ebdfee86");
+				
+
+		        String urlaqi = sbuff.toString();
+		        urlaqi=urlaqi.replace(' ', '+');
+		        var reqaqi = HttpRequest.newBuilder().GET().uri(URI.create(urlaqi)).build();
+		        var clientaqi = HttpClient.newBuilder().build();
+		     
+		        HttpResponse<String> respaqi;
+				try {
+					respaqi = client.send(reqaqi, HttpResponse.BodyHandlers.ofString());
+					String jsonaqi=respaqi.body();
+					Object objaqi=JSONValue.parse(jsonaqi);  
+				    JSONObject myrespaqi = (JSONObject) objaqi;
+					
+				    
+				    Object objdata=JSONValue.parse(myrespaqi.get("data").toString()); 
+				    JSONObject dataresp = (JSONObject) objdata;
+				    
+				    
+				    
+				    Object objcurr=JSONValue.parse(dataresp.get("current").toString()); 
+				    JSONObject currresp = (JSONObject) objcurr;
+				    
+				    
+				    
+				    Object objpol=JSONValue.parse(currresp.get("pollution").toString()); 
+				    JSONObject polresp = (JSONObject) objpol;
+				    
+				    int aqi=Integer.parseInt(polresp.get("aqius").toString());
+				    int aq=0;
+				    if(aqi<=50) 
+				    {
+				    	request.setAttribute("aq", "Good");
+				    	request.setAttribute("imgaq","images/1.png");
+				    	}
+				    else if(aqi>50 && aqi<=100)
+				    {
+				    	request.setAttribute("aq", "Moderate");
+				    	request.setAttribute("imgaq","images/2.png");
+				    	}
+				    else if(aqi>100 && aqi<=200)
+				    {
+				    	request.setAttribute("aq", "Unhealthy");
+				    	request.setAttribute("imgaq","images/3.png");
+				    	}
+				    else if(aqi>200)
+				    {
+				    	request.setAttribute("aq", "Poisonous");
+				    	request.setAttribute("imgaq","images/4.png");
+				    	}
+				    
+				    request.setAttribute("aqi", polresp.get("aqius"));				    
+				    
+				    request.getRequestDispatcher("/result.jsp").forward(request,response);
+				     
+				    
+				    
+				    
+					 System.out.println(polresp.get("aqius").toString());
+				}
+				 catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		     
 		     
 		     
 		} catch (IOException | InterruptedException e) {

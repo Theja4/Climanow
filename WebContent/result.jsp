@@ -67,7 +67,8 @@
 	String humidity = request.getAttribute("humidity").toString();
 	String date = request.getAttribute("date").toString();
 	String wind = request.getAttribute("wind").toString();
-	
+	String aqi = request.getAttribute("aqi").toString();
+	String aq = request.getAttribute("aq").toString();
 	String path=request.getParameter("img");
 	
 	
@@ -116,7 +117,19 @@
     </div>
    
   </div>
-
+	
+	<div class="current-stats2">
+    <div>
+      <div class="current-stats__value"><%out.println(aqi); %></div>
+      <div class="current-stats__label">US AQI</div>
+      <div class="current-stats__value"><%out.println(aq); %></div>
+      <div class="current-stats__label">Air Quality</div>
+    </div>
+    <div>
+      <img class="testimg" alt="hi" src="${imgaq}">
+    </div>
+   
+  </div>
   <div class="weather-by-hour">
     <h2 class="weather-by-hour__heading">Today's weather</h2>
     <div class="weather-by-hour__container">
