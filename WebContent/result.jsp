@@ -48,6 +48,10 @@
 	temp=temp-273;
 	long finaltemp = Math.round(temp);
 	
+	double temp1 = (double) request.getAttribute("temp-1");
+	temp1=temp1-273;
+	long finaltemp1 = Math.round(temp1);
+	
 	double tempmin = (double) request.getAttribute("tempmin");
 	tempmin=tempmin-273;
 	long finaltempmin = Math.round(tempmin);
@@ -60,8 +64,10 @@
 	feelsLike=feelsLike-273;
 	long finalFeelsLike = Math.round(feelsLike);
 	
-	
+
+	String day1 = request.getAttribute("day1").toString();
 	String weather = request.getAttribute("description").toString();
+	String description1 = request.getAttribute("description-1").toString();
 	String name = request.getAttribute("name").toString();
 	String country = request.getAttribute("country").toString();
 	String humidity = request.getAttribute("humidity").toString();
@@ -70,9 +76,12 @@
 	String aqi = request.getAttribute("aqi").toString();
 	String aq = request.getAttribute("aq").toString();
 	String path=request.getParameter("img");
+	String img1=request.getParameter("img1");
 	
 	
-	//out.println("tempmax is : "+finaltempmax+" °C");
+	String humidity1=request.getAttribute("humidity1").toString();
+	String wind1 = request.getAttribute("wind_speed-1").toString();
+	//out.println("tempmax is : "+finaltempmax+" °C");feelslike-1
 	//out.println("tempmin is : "+finaltempmin+" °C");
 	//out.println("Feels Like is : "+finalFeelsLike+" °C");
 	//out.println("humidity is : "+humidity+" %");
@@ -104,9 +113,9 @@
 
   <div class="current-stats">
     <div>
-      <div class="current-stats__value"><%out.println(+finaltempmax+"°c"); %></div>
+      <div class="current-stats__value"><%out.println(finaltempmax+"°c"); %></div>
       <div class="current-stats__label">High</div>
-      <div class="current-stats__value"><%out.println(+finaltempmin+"°c"); %></div>
+      <div class="current-stats__value"><%out.println(finaltempmin+"°c"); %></div>
       <div class="current-stats__label">Low</div>
     </div>
     <div>
@@ -130,218 +139,104 @@
     </div>
    
   </div>
-  <div class="weather-by-hour">
-    <h2 class="weather-by-hour__heading">Today's weather</h2>
-    <div class="weather-by-hour__container">
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">3am</div>
-        <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        <div>14&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">6am</div>
-        <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        <div>16&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">9am</div>
-        <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        <div>17&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">12pm</div>
-        <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        <div>19&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">3pm</div>
-        <img src="icons/sunny.svg" alt="Sunny">
-        <div>21&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">6pm</div>
-        <img src="icons/sunny.svg" alt="Sunny">
-        <div>20&deg;</div>
-      </div>
-      <div class="weather-by-hour__item">
-        <div class="weather-by-hour__hour">9pm</div>
-        <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        <div>18&deg;</div>
-      </div>
-    </div>
-  </div>
+
 
 
   <div class="next-5-days">
-    <h2 class="next-5-days__heading">Next 5 days</h2>
+    <h2 class="next-5-days__heading">Last 5 days</h2>
     <div class="next-5-days__container">
+	<div class="next-5-days__row">
 
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">30/7</div>
+        <div class="next-5-days__date">          
+          <%out.println(day1);%>
         </div>
 
         <div class="next-5-days__low">
-          10&deg;
-          <div class="next-5-days__label">Low</div>
+          <%out.println(finaltemp1+"°c"); %>
+          <div class="next-5-days__label">temp</div>
         </div>
 
         <div class="next-5-days__high">
-          21&deg;
-          <div class="next-5-days__label">High</div>
+          <%out.println(humidity1+"%"); %>
+          <div class="next-5-days__label">humidity</div>
         </div>
 
         <div class="next-5-days__icon">
-          <img src="icons/sunny.svg" alt="Sunny">
+        <%out.println(description1); %>
         </div>
 
         <div class="next-5-days__rain">
-          0%
-          <div class="next-5-days__label">Rain</div>
+          <%out.println(wind1+" kmph"); %>
+          <div class="next-5-days__label">Wind</div>
         </div>
 
         <div class="next-5-days__wind">
-          12mph
+          <img alt="1" src="${img1}">
+        </div>
+
+      </div><div class="next-5-days__row">
+
+        <div class="next-5-days__date">          
+          <%out.println(day1);%>
+        </div>
+
+        <div class="next-5-days__low">
+          <%out.println(finaltemp1+"°c"); %>
+          <div class="next-5-days__label">temp</div>
+        </div>
+
+        <div class="next-5-days__high">
+          <%out.println(humidity1+"%"); %>
+          <div class="next-5-days__label">humidity</div>
+        </div>
+
+        <div class="next-5-days__icon">
+        <%out.println(description1); %>
+        </div>
+
+        <div class="next-5-days__rain">
+          <%out.println(wind1+" kmph"); %>
           <div class="next-5-days__label">Wind</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          <img alt="1" src="${img1}">
         </div>
 
       </div>
       <div class="next-5-days__row">
 
-        <div class="next-5-days__date">
-          Wed
-          <div class="next-5-days__label">31/7</div>
+        <div class="next-5-days__date">          
+          <%out.println(day1);%>
         </div>
 
         <div class="next-5-days__low">
-          9&deg;
-          <div class="next-5-days__label">Low</div>
+          <%out.println(finaltemp1+"°c"); %>
+          <div class="next-5-days__label">temp</div>
         </div>
 
         <div class="next-5-days__high">
-          18&deg;
-          <div class="next-5-days__label">High</div>
+          <%out.println(humidity1+"%"); %>
+          <div class="next-5-days__label">humidity</div>
         </div>
 
         <div class="next-5-days__icon">
-          <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
+        <%out.println(description1); %>
         </div>
 
         <div class="next-5-days__rain">
-          3%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          7mph
+          <%out.println(wind1+" kmph"); %>
           <div class="next-5-days__label">Wind</div>
         </div>
 
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Thur
-          <div class="next-5-days__label">1/8</div>
-        </div>
-
-        <div class="next-5-days__low">
-          7&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          15&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          75%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
         <div class="next-5-days__wind">
-          11mph
-          <div class="next-5-days__label">Wind</div>
+          <img alt="1" src="${img1}">
         </div>
 
       </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">2/8</div>
-        </div>
-
-        <div class="next-5-days__low">
-          12&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          24&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="icons/sunny.svg" alt="Sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          2%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          8mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">30/7</div>
-        </div>
-
-        <div class="next-5-days__low">
-          10&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          21&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="icons/mostly-sunny.svg" alt="Mostly sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          0%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          12mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
+      
 </main>
-
+<img alt="1" src="">
 <div id="windy"></div>
         <script >
             const options = {
