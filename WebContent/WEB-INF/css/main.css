@@ -857,9 +857,10 @@ button {
       justify-content: center;
   font-family: 'Poppins', sans-serif;
   background: url("images/back_img.jpg");
-  background-position: bottom right;
+  background-position: center center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
+  background-attachment:fixed;
   padding: 15px;
 }
 

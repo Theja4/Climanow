@@ -19,15 +19,19 @@
         </style>
 </head>
 
-  <style><%@include file="/WEB-INF/css/result.css"%></style>
+  <style><%@include file="/WEB-INF/css/loginresult.css"%></style>
   <body>
 <div class="topnav">
 
-  <a href="dashboard.jsp" style="font-size:30px;color:white;text-align:left;">Climanow</a>
-   <div style="padding-top:3px">
-  <a href="signup.jsp" style="color:white; text-align: center;float: right;">Sign up</a> 
-  <a href="login.jsp" style="color:white; text-align: center;float: right;">Log in</a></div> 
-  <form action="weather" method="get">
+  <a href="logindashboard.jsp" style="font-size:30px;color:white;text-align:left;">Climanow</a>
+   <div  style="padding-top:8px;float:right;">
+   
+	<form action="<%=request.getContextPath()%>/logout" method="post">
+		<button class ="logout-button" type="submit" >log out</button>
+	</form>
+  
+  </div> 
+  <form action="LoginWeather" method="get">
   <div class="search-container">
     <input id="search" type="text" placeholder=" Enter city" name="city" />    
     <button  class="fa fa-search" type="submit">SEARCH</button>
@@ -37,6 +41,13 @@
 
 
 <%
+response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); //its for HTTP 1.1
+response.setHeader("Pragma", "no-cache"); //Http 1.0
+		
+if(session.getAttribute("email")==null){
+	response.sendRedirect("login.jsp");
+}	
+
 	double temp = (double) request.getAttribute("temp");
 	temp=temp-273;
 	long finaltemp = Math.round(temp);

@@ -14,34 +14,65 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     
     <title>Climate now</title>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+      <script>
+         $(function() {
+            var availableTutorials = [
+               "ActionScript",
+               "Bootstrap",
+               "C",
+               "C++",
+               "Ecommerce",
+               "Jquery",
+               "Groovy",
+               "Java",
+               "JavaScript",
+               "Lua",
+               "Perl",
+               "Ruby",
+               "Scala",
+               "Swing",
+               "XHTML"	
+            ];
+            $( "#automplete-6" ).autocomplete({
+               source: availableTutorials
+            });
+            $( "#automplete-6" ).autocomplete("option", "position",
+               { my : "right-10 top+10", at: "right top" }) 
+         });
+      </script>
   </head>
   <style><%@include file="/WEB-INF/css/main.css"%></style>
   <body >
   <div class="topnav">
   
-  <a href="#news" style="font-size:30px;color:white;text-align:left;">Climanow</a>
-  <div style="padding-left:80%;padding-top:1%;">
-  <a href="login.jsp" style="color:white;text-align:right;">Log in</a>
-  <a href="signup.jsp" style="color:white;">Sign up</a></div>
+  <a href="dashboard.jsp" style="font-size:30px;color:white;text-align:left;">Climanow</a>
+  <div style="padding-top:3px">
+  <a href="signup.jsp" style="color:white; float: right;">Sign up</a> 
+  <a href="login.jsp" style="color:white; float: right;">Log in</a></div> 
 </div>
     <div class="s130">
       <form action="weather" method="get">
-      <div style="padding-bottom:10px;"><span class="info" >ex. Delhi, Hyderabad, Bengaluru, etc.</span></div>
-        <div class="inner-form" >
+       <div class="inner-form" >
           <div class="input-field first-wrap" >
             <div class="svg-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
               </svg>
             </div>
-            <input id="search" type="text" placeholder="Enter city" name="city" />
+            <label for = "automplete-6">Tags: </label>
+            <input id="automplete-6" type="text" placeholder="Enter city" name="city" />
           </div>
           <div class="input-field second-wrap">
             <button id ="searchButton" class="btn-search" type="submit">SEARCH</button>
           	
           </div>
         </div>
-        
+        <div style="padding-bottom:10px;"><span class="info" >ex. Delhi, Hyderabad, Bengaluru, etc.</span></div>
+       
       </form>
     </div>    
     
