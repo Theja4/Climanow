@@ -2,6 +2,8 @@
 package com.theja.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,15 +27,58 @@ public class LoginServlet extends HttpServlet {
 
 	        String email = request.getParameter("email");
 	        String password = request.getParameter("password");
+	        
 	        Login login = new Login();
 	        login.setEmail(email);
 	        login.setPassword(password);
 	        try {
 	            if (loginDao.validate(login)) {
-	                HttpSession session = request.getSession();
-	                session.setAttribute("email",email);
-	                response.sendRedirect("logindashboard.jsp");
+	            	String username = userDao.getUserName(login);
+	            	String city = userDao.getCity(login);
+	            	HttpSession session = request.getSession();
+	                request.setAttribute("username",username);
+	                System.out.println(city);
+	                request.setAttribute("city",city);
+	                request.setAttribute("email",email);
+	                RequestDispatcher rd = request.getRequestDispatcher("LoginCity");
+	                rd.forward(request,response);
+	                //response.sendRedirect("");
 	            } else {
+	                HttpSession session = request.getSession();
+	                response.sendRedirect("login.jsp");
+	                //session.setAttribute("user", email);
+	                //response.sendRedirect("login.jsp");
+	            }
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+		
+		
+	}
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+	        String email = request.getParameter("email");
+	        String password = request.getParameter("password");
+	        
+	        Login login = new Login();
+	        login.setEmail(email);
+	        login.setPassword(password);
+	        try {
+	            if (true) {
+	            	System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+	            	String username = userDao.getUserName(login);
+	            	String city = userDao.getCity(login);
+	            	HttpSession session = request.getSession();
+	                session.setAttribute("username",username);
+	                System.out.println(city);
+	                session.setAttribute("city",city);
+	                session.setAttribute("email",email);
+	                RequestDispatcher rd = request.getRequestDispatcher("LoginCity");
+	                rd.forward(request,response);
+	                response.sendRedirect("");
+	            } else {
+
+	            	System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEE");
 	                HttpSession session = request.getSession();
 	                response.sendRedirect("login.jsp");
 	                //session.setAttribute("user", email);

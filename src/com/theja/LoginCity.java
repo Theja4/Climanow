@@ -1,54 +1,89 @@
 package com.theja;
-
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;  
-import org.json.simple.JSONValue;  
+import com.theja.model.Login;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
-import java.util.Date;
 
-@WebServlet("/weather")
-public class weather extends HttpServlet {
-	
-    
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-		String s=request.getParameter("city");
-		StringBuffer sb=new StringBuffer();
-		sb.append("https://api.openweathermap.org/data/2.5/weather?q=");
-		sb.append(s);
-		sb.append("&appid=bb0c9ba8278ff5cfe5c0dbd617481bed");
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+/**
+ * Servlet implementation class LoginCity
+ */
+@WebServlet("/LoginCity")
+public class LoginCity extends HttpServlet {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String city="";
+		 try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	        try (Connection connection = DriverManager
+	            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
+
+	            // Step 2:Create a statement using connection object
+	            PreparedStatement preparedStatement = connection
+	            .prepareStatement("select city from city where email = ?")) {
+	            preparedStatement.setString(1, (String) request.getAttribute("email"));
+
+	            System.out.println(preparedStatement);
+	            ResultSet result = preparedStatement.executeQuery();
+	            
+	            if(result.next()) {
+	            city= result.getString(1);
+
+	            
+	            }
+	        } catch (Exception e) {
+	        	
+	        }
 		
-
-        String url = sb.toString();
-        url=url.replace(' ', '+');
+    	HttpSession session = request.getSession();
+    	
+		String url=city;
         var req = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
         var client = HttpClient.newBuilder().build();        
+        
         System.out.println(url);
         HttpResponse<String> resp;
-		try {
+        try {
 			resp = client.send(req, HttpResponse.BodyHandlers.ofString());
 			String json=resp.body();			
 			
 			Object obj=JSONValue.parse(json);  
 		    JSONObject myresp = (JSONObject) obj;	    
 
-		    request.setAttribute("name", myresp.get("name"));	   
-		    
+		    request.setAttribute("name", myresp.get("name"));	    
 		    
 		    Object objsys=JSONValue.parse(myresp.get("sys").toString()); 
 		    JSONObject sysresp = (JSONObject) objsys;
@@ -89,71 +124,10 @@ public class weather extends HttpServlet {
 		    String datestr=date.toString();
 		    request.setAttribute("date", datestr);
 		    
-		     System.out.println(myresp);
-		     System.out.println(epoch);		     
-		     
-		     String lon=coordresp.get("lon").toString();
-		     String lat=coordresp.get("lat").toString();
-		     
-		     StringBuilder sone=new StringBuilder("http://api.openweathermap.org/data/2.5/onecall/timemachine?lat=");
-		     sone.append(lat);
-		     sone.append("&lon=");
-		     sone.append(lon);
-		     sone.append("&dt=");
-		     sone.append((epoch-day));
-		     sone.append("&appid=bb0c9ba8278ff5cfe5c0dbd617481bed");
-		     
-		     String urlone = sone.toString();
-		     	
-		        urlone=urlone.replace(' ', '+');
-		        var reqone = HttpRequest.newBuilder().GET().uri(URI.create(urlone)).build();
-		        var clientone = HttpClient.newBuilder().build();
-		     
-		        HttpResponse<String> respone;
-		        
-		        try {
-		        	respone = client.send(reqone, HttpResponse.BodyHandlers.ofString());
-					String jsonone=respone.body();
-					
-					Object objone=JSONValue.parse(jsonone);  
-				    JSONObject myrespone = (JSONObject) objone;
-				    
-				    System.out.println(myrespone.toJSONString());
-				    
-				    Object objcurrent=JSONValue.parse(myrespone.get("current").toString()); 
-				    JSONObject current = (JSONObject) objcurrent;
-				    request.setAttribute("temp-1", current.get("temp"));
-				    request.setAttribute("humidity1", current.get("humidity"));
-				    request.setAttribute("wind_speed-1", current.get("wind_speed"));
-				    String day1=current.get("dt").toString();
-				    Date date1 = new Date(Long.parseLong(day1)*1000);
-				    System.out.println(date1);
-				    String showday1=date.toString().substring(0, 4);
-				    String showmonth1=date.toString().substring(4, 10);
-				    request.setAttribute("day1",showday1 );
-				    request.setAttribute("month1",showmonth1 );
-				    
-				    Object weatherone=JSONValue.parse(current.get("weather").toString());
-				    JSONArray weatherarrayone=(JSONArray) objweather;
-				    JSONObject weatherrespone = (JSONObject) weatherarrayone.get(0);
-
-				    request.setAttribute("description-1", weatherrespone.get("description"));
-				   
-				    
-				    StringBuilder imgsb=new StringBuilder("http://openweathermap.org/img/wn/");
-				    imgsb.append(weatherrespone.get("icon"));
-				    imgsb.append(".png");
-				    String img1=imgsb.toString();
-				    request.setAttribute("img1", img1);
-					   
-				     System.out.println(img1);
-		        }
-		        catch (IOException | InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		     
-			 StringBuffer sbuff=new StringBuffer();
+		    String lon=coordresp.get("lon").toString();
+		    String lat=coordresp.get("lat").toString();
+		    
+		    StringBuffer sbuff=new StringBuffer();
 			 sbuff.append("http://api.airvisual.com/v2/nearest_city?lat=");
 			 sbuff.append(lat);
 			 sbuff.append("&lon=");
@@ -213,8 +187,9 @@ public class weather extends HttpServlet {
 				    
 				    request.setAttribute("aqi", polresp.get("aqius"));				    
 				    
-				    request.getRequestDispatcher("/result.jsp").forward(request,response);
-				     
+				  // request.getRequestDispatcher("/result.jsp").forward(request,response);
+
+			        request.getRequestDispatcher("/logindashboard.jsp").forward(request,response);
 				    
 				    
 				    
@@ -223,18 +198,18 @@ public class weather extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-		     
-		     
-		     
-		} catch (IOException | InterruptedException e) {
+		    
+		    
+		    
+		    
+		     System.out.println(myresp);
+		     System.out.println(epoch);		     
+        }catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-       
-		
-		
+        
+        
 	}
 
 }

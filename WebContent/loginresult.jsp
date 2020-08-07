@@ -29,7 +29,7 @@
 	<form action="<%=request.getContextPath()%>/logout" method="post">
 		<button class ="logout-button" type="submit" >log out</button>
 	</form>
-  
+  	
   </div> 
   <form action="LoginWeather" method="get">
   <div class="search-container">
@@ -73,6 +73,7 @@ if(session.getAttribute("email")==null){
 	String weather = request.getAttribute("description").toString();
 	String description1 = request.getAttribute("description-1").toString();
 	String name = request.getAttribute("name").toString();
+	request.setAttribute("name",name);
 	String country = request.getAttribute("country").toString();
 	String humidity = request.getAttribute("humidity").toString();
 	String date = request.getAttribute("date").toString();
@@ -81,7 +82,6 @@ if(session.getAttribute("email")==null){
 	String aq = request.getAttribute("aq").toString();
 	String path=request.getParameter("img");
 	String img1=request.getParameter("img1");
-	
 	
 	String humidity1=request.getAttribute("humidity1").toString();
 	String wind1 = request.getAttribute("wind_speed-1").toString();
@@ -102,8 +102,11 @@ if(session.getAttribute("email")==null){
     <h1 class="location-and-date__location"><%out.println(name +", "+ country); %></h1>
     <div><%out.println(date); %></div>
   </div>
-
-
+${name}
+<form action="<%=request.getContextPath()%>/pin" method="post">
+		<input type="hidden" name="newcity" value="<%out.println(name);%>" />
+		<button class ="pin-button" type="submit" >pin </button>
+	</form>
   <div class="current-temperature">
     <div class="current-temperature__icon-container">
       <img src="${img}" alt="YYYY">

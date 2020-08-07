@@ -1,17 +1,6 @@
 package com.theja;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;  
-import org.json.simple.JSONValue;  
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -19,13 +8,20 @@ import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.util.Date;
 
-@WebServlet("/weather")
-public class weather extends HttpServlet {
-	
-    
-	
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+@WebServlet("/LoginWeather")
+public class LoginWeather extends HttpServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 
 		String s=request.getParameter("city");
 		StringBuffer sb=new StringBuffer();
@@ -38,7 +34,7 @@ public class weather extends HttpServlet {
         url=url.replace(' ', '+');
         var req = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
         var client = HttpClient.newBuilder().build();        
-        System.out.println(url);
+        
         HttpResponse<String> resp;
 		try {
 			resp = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -49,6 +45,7 @@ public class weather extends HttpServlet {
 
 		    request.setAttribute("name", myresp.get("name"));	   
 		    
+		    System.out.println("errr"+s);
 		    
 		    Object objsys=JSONValue.parse(myresp.get("sys").toString()); 
 		    JSONObject sysresp = (JSONObject) objsys;
@@ -213,7 +210,7 @@ public class weather extends HttpServlet {
 				    
 				    request.setAttribute("aqi", polresp.get("aqius"));				    
 				    
-				    request.getRequestDispatcher("/result.jsp").forward(request,response);
+				    request.getRequestDispatcher("/loginresult.jsp").forward(request,response);
 				     
 				    
 				    
