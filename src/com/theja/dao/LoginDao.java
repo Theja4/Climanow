@@ -13,7 +13,7 @@ public class LoginDao {
 	        boolean status = false;
 
 	        Class.forName("com.mysql.jdbc.Driver");
-
+	        
 	        try (Connection connection = DriverManager
 	            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
 
@@ -31,6 +31,7 @@ public class LoginDao {
 	            // process sql exception
 	            printSQLException(e);
 	        }
+	        System.out.println(status);
 	        return status;
 	    }
 

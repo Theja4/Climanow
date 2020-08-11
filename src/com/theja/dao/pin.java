@@ -25,16 +25,15 @@ public class pin extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		 HttpSession session = request.getSession();
+		 String email=session.getAttribute("email").toString();
+			request.setAttribute("email",email);	
 
-			String email= (String) session.getAttribute("email");
         try (Connection connection = DriverManager
             .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
         		
-            // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection
             .prepareStatement("select city from city where email = ?")) {
             preparedStatement.setString(1, email);
@@ -45,29 +44,26 @@ public class pin extends HttpServlet {
             if(result.next()) {
 
             String city= result.getString(1);
-            String newcity="https://api.openweathermap.org/data/2.5/weather?q="+request.getParameter("newcity").toString()+"&appid=bb0c9ba8278ff5cfe5c0dbd617481bed";
-           // Object myObject = request.getSession().getAttribute(newcity);
-           // newcity=myObject.toString();
+            String newcity=request.getParameter("newcity").toString();
+          
 	        try (Connection connectionexists = DriverManager
 		            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
 
-		            // Step 2:Create a statement using connection object
 		            PreparedStatement preparedStatementexists = connectionexists
 		            .prepareStatement("delete from city where email=?")) {
 	        	
 	        	preparedStatementexists.setString(1, email);
-
+	        	System.out.println(preparedStatementexists);
                 
 	        	preparedStatementexists.execute();
 	        	try (Connection connectionadd = DriverManager
 			            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
 
-			            // Step 2:Create a statement using connection object
 			            PreparedStatement preparedStatementadd = connectionadd
 			            .prepareStatement("insert into city values(?,?)")) {		        	
 		        	preparedStatementadd.setString(1, email);
 		        	preparedStatementadd.setString(2, newcity);
-
+		        	System.out.println(preparedStatementadd);
 	                
 		        	preparedStatementadd.execute();
 		        	
@@ -77,7 +73,6 @@ public class pin extends HttpServlet {
 	                System.out.println(preparedStatementexists);
 		        }
 		        catch (SQLException e) {
-		            // process sql exception
 		            printSQLException(e);
 		        } 
 	        	System.out.println(city);
@@ -86,15 +81,17 @@ public class pin extends HttpServlet {
                 System.out.println(preparedStatementexists);
 	        }
 	        catch (SQLException e) {
-	            // process sql exception
 	            printSQLException(e);
 	        }           
+	        
+	        
+	        session.setAttribute("city", newcity);
+	        response.sendRedirect("LoginCity"); 
             }	            
             else {
             	try (Connection connectionexists = DriverManager
 			            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
 
-			            // Step 2:Create a statement using connection object
 			            PreparedStatement preparedStatementexists = connectionexists
 			            .prepareStatement("INSERT INTO users (email, city) VALUES  (?, ?); ")) {
 
@@ -102,21 +99,20 @@ public class pin extends HttpServlet {
     	            String newcity=(String) session.getAttribute("city");
             		preparedStatementexists.setString(1, email);
 		        	preparedStatementexists.setString(2, newcity);
-		        	System.out.println(preparedStatementexists);
+		        	System.out.println("inside pin"+preparedStatementexists);
 		        	preparedStatementexists.execute();
 		        	
 		        	request.setAttribute("city",newcity);
-		        	 request.getRequestDispatcher("LoginCity").forward(request,response);
+		        	response.sendRedirect("LoginCity"); 
+		        	//request.getRequestDispatcher("LoginCity").forward(request,response);
 				     
 		        	
 		        }
 		        catch (SQLException e) {
-		            // process sql exception
-		            printSQLException(e);
+		           printSQLException(e);
 		        }
             }
         } catch (SQLException e) {
-            // process sql exception
             printSQLException(e);
         }
         

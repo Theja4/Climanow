@@ -25,25 +25,30 @@ public class LoginServlet extends HttpServlet {
 
 	    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
-	        String email = request.getParameter("email");
+	    	String email = request.getParameter("email");
 	        String password = request.getParameter("password");
-	        
+	        System.out.println("This is loginservlet");
 	        Login login = new Login();
 	        login.setEmail(email);
 	        login.setPassword(password);
 	        try {
 	            if (loginDao.validate(login)) {
+	            	System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS "+email);
 	            	String username = userDao.getUserName(login);
 	            	String city = userDao.getCity(login);
 	            	HttpSession session = request.getSession();
-	                request.setAttribute("username",username);
+	                session.setAttribute("username",username);
 	                System.out.println(city);
-	                request.setAttribute("city",city);
+	                System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS "+city);
+	            	session.setAttribute("city",city);
 	                request.setAttribute("email",email);
 	                RequestDispatcher rd = request.getRequestDispatcher("LoginCity");
+	                session.setAttribute("email",email);
 	                rd.forward(request,response);
 	                //response.sendRedirect("");
 	            } else {
+
+	            	System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEE");
 	                HttpSession session = request.getSession();
 	                response.sendRedirect("login.jsp");
 	                //session.setAttribute("user", email);
@@ -53,25 +58,24 @@ public class LoginServlet extends HttpServlet {
 	            e.printStackTrace();
 	        }
 		
-		
 	}
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
 	        String email = request.getParameter("email");
 	        String password = request.getParameter("password");
-	        
+	        System.out.println("This is loginservlet");
 	        Login login = new Login();
 	        login.setEmail(email);
 	        login.setPassword(password);
 	        try {
-	            if (true) {
+	            if (loginDao.validate(login)) {
 	            	System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 	            	String username = userDao.getUserName(login);
-	            	String city = userDao.getCity(login);
+	            	//String city = userDao.getCity(login);
 	            	HttpSession session = request.getSession();
 	                session.setAttribute("username",username);
-	                System.out.println(city);
-	                session.setAttribute("city",city);
+	                //System.out.println(city);
+	                //session.setAttribute("city",city);
 	                session.setAttribute("email",email);
 	                RequestDispatcher rd = request.getRequestDispatcher("LoginCity");
 	                rd.forward(request,response);

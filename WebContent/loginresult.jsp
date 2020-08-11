@@ -44,9 +44,12 @@
 response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); //its for HTTP 1.1
 response.setHeader("Pragma", "no-cache"); //Http 1.0
 		
-if(session.getAttribute("email")==null){
-	response.sendRedirect("login.jsp");
-}	
+	if(session.getAttribute("email")==null){
+		response.sendRedirect("login.jsp");
+	}	
+String email=session.getAttribute("email").toString();
+request.setAttribute("email",email);	
+
 
 	double temp = (double) request.getAttribute("temp");
 	temp=temp-273;

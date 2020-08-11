@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,8 +23,10 @@ import org.json.simple.JSONValue;
 public class LoginWeather extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		 HttpSession session=request.getSession();  
 		String s=request.getParameter("city");
+		String email = session.getAttribute("email").toString();
+		request.setAttribute("email",email);
 		StringBuffer sb=new StringBuffer();
 		sb.append("https://api.openweathermap.org/data/2.5/weather?q=");
 		sb.append(s);
