@@ -62,7 +62,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		sb.append(sk);
 		sb.append("&appid=bb0c9ba8278ff5cfe5c0dbd617481bed");
 		
-
         String url = sb.toString();
         url=url.replace(' ', '+');
         var req = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
@@ -131,7 +130,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			 sbuff.append(lon);
 			 sbuff.append("&key=1bf8e445-9963-4988-a183-0f36ebdfee86");
 				
-
+			
 		        String urlaqi = sbuff.toString();
 		        urlaqi=urlaqi.replace(' ', '+');
 		        var reqaqi = HttpRequest.newBuilder().GET().uri(URI.create(urlaqi)).build();
@@ -184,11 +183,57 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 				    
 				    request.setAttribute("aqi", polresp.get("aqius"));				    
 				    
-				  // request.getRequestDispatcher("/result.jsp").forward(request,response);
-				    System.out.println("Should redirect");
+				  //https://api.weatherbit.io/v2.0/alerts?lat=17.38&lon=78.48&key=01f66e5e7bbb445ba4fd6ab61b27a070
+ 
+				    StringBuffer sbuffAlert=new StringBuffer();
+					 sbuffAlert.append("https://api.weatherbit.io/v2.0/alerts?lat=");
+					 sbuffAlert.append(lat);
+					 sbuffAlert.append("&lon=");
+					 sbuffAlert.append(lon);
+					 sbuffAlert.append("&key=01f66e5e7bbb445ba4fd6ab61b27a070");
+					
 				    
-			        request.getRequestDispatcher("/logindashboard.jsp").forward(request,response);
-				    
+				    String urlAlert = sbuffAlert.toString();
+			        urlAlert=urlAlert.replace(' ', '+');
+			        var reqAlert = HttpRequest.newBuilder().GET().uri(URI.create(urlAlert)).build();
+			        var clientAlert = HttpClient.newBuilder().build();
+			     
+			        HttpResponse<String> respAlert;
+					try {
+						respAlert = client.send(reqAlert, HttpResponse.BodyHandlers.ofString());
+						String jsonAlert=respAlert.body();
+						Object objAlert=JSONValue.parse(jsonAlert);  
+					    JSONObject myrespAlert = (JSONObject) objAlert;
+					    System.out.println("NNNNNNNNN"+urlAlert);
+					    
+					    System.out.println("NNNNNNNNN"+myrespAlert.toJSONString());
+					    
+					    Object objAlertArray=JSONValue.parse(myrespAlert.get("alerts").toString());
+					    JSONArray arrayAlert=(JSONArray) objAlertArray;
+					    if(arrayAlert.isEmpty()) {
+					    	session.setAttribute("title", "No Alerts have a nice day");
+					    }
+					    else {
+						    JSONObject weatherAlert = (JSONObject)arrayAlert.get(0);
+						    String alert=(String) weatherAlert.get("title");
+						    session.setAttribute("title", alert);
+						    System.out.println("alertLogin city"+alert);
+					    }
+					    
+					    
+					  // request.getRequestDispatcher("/result.jsp").forward(request,response);
+					    System.out.println("Should redirect");
+					    
+				        request.getRequestDispatcher("/logindashboard.jsp").forward(request,response);
+					    
+					    
+					    
+					}
+					 catch (IOException | InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        
 				    
 				    
 				}

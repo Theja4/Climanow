@@ -18,14 +18,9 @@
 	
 	
 
-%>
-
-
-
-<%
 	//HttpSession session=request.getSession();  
 	String email=session.getAttribute("email").toString();
-	//request.setAttribute("email",email);	
+	request.setAttribute("email",email);	
 
 	double temp = (double) request.getAttribute("temp");
 	temp=temp-273;
@@ -54,13 +49,14 @@
 	String aqi = request.getAttribute("aqi").toString();
 	String aq = request.getAttribute("aq").toString();
 	String path=request.getParameter("img");
-	
-	
+	String alert=session.getAttribute("title").toString();
+	String username=session.getAttribute("username").toString();
 	//out.println("tempmax is : "+finaltempmax+" °C");feelslike-1
 	//out.println("tempmin is : "+finaltempmin+" °C");
 	//out.println("Feels Like is : "+finalFeelsLike+" °C");
 	//out.println("humidity is : "+humidity+" %");
 	
+						   
 	
 %>
 
@@ -83,6 +79,17 @@
  </form>
 </div>
 
+<div class="courses-container" >
+	<div class="course">
+		<div class="course-preview">
+		<h2>Hi ${username},</h2>
+		</div>
+		<div class="course-info" >
+		<h2 style="color:#2A265F;"><%out.println(alert);%></h2>
+			
+		</div>
+	</div>
+</div>
 
 
 
