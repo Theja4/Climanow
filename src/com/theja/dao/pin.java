@@ -93,7 +93,7 @@ public class pin extends HttpServlet {
 			            .getConnection("jdbc:mysql://localhost:3306/Climanow?useSSL=false", "root", "1234");
 
 			            PreparedStatement preparedStatementexists = connectionexists
-			            .prepareStatement("INSERT INTO users (email, city) VALUES  (?, ?); ")) {
+			            .prepareStatement("INSERT INTO city (email, city) VALUES  (?, ?); ")) {
 
                     
     	            String newcity=(String) session.getAttribute("city");

@@ -26,6 +26,7 @@ public class LoginWeather extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 HttpSession session=request.getSession();  
 		String s=request.getParameter("city");
+		session.setAttribute("city",s);
 		String email = session.getAttribute("email").toString();
 		request.setAttribute("email",email);
 		StringBuffer sb=new StringBuffer();

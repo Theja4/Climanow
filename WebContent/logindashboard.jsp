@@ -12,7 +12,7 @@
 	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); //its for HTTP 1.1
 	response.setHeader("Pragma", "no-cache"); //Http 1.0
 			
-	if(request.getAttribute("email")==null){
+	if(session.getAttribute("email")==null){
 	response.sendRedirect("login.jsp");
 	}
 	

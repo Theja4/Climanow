@@ -17,7 +17,7 @@
 	<h1>Create Account</h1>
 	
 	<span>or use your email for registration</span>
-	<input type="text" name="name" placeholder="Name">
+	<input type="text" name="userName" placeholder="Name">
 	<input type="email" name="email" placeholder="Email">
 	<input type="password" name="password" placeholder="Password">
 	<button>SignUp</button>
@@ -50,7 +50,7 @@
 	</div>
 </div>
 </div>
-
+.
 <script type="text/javascript">
 	const signUpButton = document.getElementById('signUp');
 	const signInButton = document.getElementById('signIn');
