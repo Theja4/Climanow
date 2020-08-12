@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="images/favicon.ico" >
+    
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Climanow</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
 </head>
 

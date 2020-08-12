@@ -1,0 +1,149 @@
+
+
+h2 {
+	padding-left: 50px;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  
+}
+.topnav {
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  background-color: #393e46;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+body {
+  margin: 0;
+    background: url("images/back_img.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment:fixed;
+}
+
+/* ===========================
+   ====== Search Box ====== 
+   =========================== */
+.search{
+  padding-top:10%;
+  padding-left:33%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.autocomplete-items {
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  font-family:sans-serif;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+   
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+.autocomplete
+{
+	
+  background-color:white;
+	overflow: auto;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  width:60%;
+}
+
+.autocomplete input[type="text"]
+{
+  padding-top:20px;
+  padding-left:20px;
+	border: 0px;
+	width: 67%;
+	
+  font-family: 'Poppins', sans-serif;
+}
+
+.autocomplete input[type="text"]:focus
+{
+  padding-top:20px;
+	outline: 0;
+	
+  font-family: 'Poppins', sans-serif;
+}
+
+.autocomplete input[type="submit"]
+{
+  
+  font-family: 'Poppins', sans-serif;
+  height:60px;
+	border: 0px;
+	background: none;
+	background-color: #3657f7;
+	color: #fff;
+	float: right;
+	padding: 10px;
+	border-radius-top-right: 5px;
+	-moz-border-radius-top-right: 5px;
+	-webkit-border-radius-top-right: 5px;
+	border-radius-bottom-right: 5px;
+	-moz-border-radius-bottom-right: 5px;
+	-webkit-border-radius-bottom-right: 5px;
+        cursor:pointer;
+}
+
+/* ===========================
+   ====== Medua Query for Search Box ====== 
+   =========================== */
+
+@media only screen and (min-width : 150px) and (max-width : 780px)
+{
+	{}
+	.search
+	{
+		width: 95%;
+		margin: 0 auto;
+	}
+
+}

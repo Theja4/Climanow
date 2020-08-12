@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="images/favicon.ico" >
+    
 <meta >
 
 <meta charset="ISO-8859-1" name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
@@ -105,7 +107,6 @@ request.setAttribute("email",email);
     <h1 class="location-and-date__location"><%out.println(name +", "+ country); %></h1>
     <div><%out.println(date); %></div>
   </div>
-${name}
 <form action="<%=request.getContextPath()%>/pin" method="post">
 		<input type="hidden" name="newcity" value="<%out.println(name);%>" />
 		<button class ="pin-button" type="submit" >pin </button>
@@ -250,9 +251,7 @@ ${name}
 <div id="windy"></div>
         <script >
             const options = {
-    // Required: API key
-    key: 'CB9zM1BVX8QoqKdXavUinECL4AYNQKJM', // REPLACE WITH YOUR KEY !!!
-
+    key: 'CB9zM1BVX8QoqKdXavUinECL4AYNQKJM', 
     // Put additional console output
     verbose: true,
 

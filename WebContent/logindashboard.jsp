@@ -8,7 +8,6 @@
 </head>
 <style><%@include file="/WEB-INF/css/logindashboard.css"%></style>
 <%
-
 	response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); //its for HTTP 1.1
 	response.setHeader("Pragma", "no-cache"); //Http 1.0
 			
@@ -17,11 +16,9 @@
 	}
 	
 	
-
 	//HttpSession session=request.getSession();  
 	String email=session.getAttribute("email").toString();
 	request.setAttribute("email",email);	
-
 	double temp = (double) request.getAttribute("temp");
 	temp=temp-273;
 	long finaltemp = Math.round(temp);
@@ -36,9 +33,12 @@
 	tempmax=tempmax-273;
 	long finaltempmax = Math.round(tempmax);
 	
+
 	double feelsLike = (double) request.getAttribute("feels_like");
 	feelsLike=feelsLike-273;
 	long finalFeelsLike = Math.round(feelsLike);
+	
+	
 	
 	String weather = request.getAttribute("description").toString();
 	String name = request.getAttribute("name").toString();
@@ -59,10 +59,8 @@
 						   
 	
 %>
-
 <body>
 <div class="topnav">
-
   <a href="logindashboard.jsp" style="font-size:30px;color:white;text-align:left;">Climanow</a>
    <div  style="padding-top:8px;float:right;">
    
@@ -78,7 +76,6 @@
   </div>
  </form>
 </div>
-
 <div class="courses-container" >
 	<div class="course">
 		<div class="course-preview">
@@ -90,17 +87,11 @@
 		</div>
 	</div>
 </div>
-
-
-
 <main class="main-container" style="padding-top:1%;">
-
   <div class="location-and-date">
     <h1 class="location-and-date__location"><%out.println(name +", "+ country); %></h1>
     <div><%out.println(date); %></div>
   </div>
-
-
   <div class="current-temperature">
     <div class="current-temperature__icon-container">
       <img src="${img}" alt="YYYY">
@@ -110,8 +101,6 @@
       <div class="current-temperature__summary"><% out.println(weather); %></div>
     </div>
   </div>
-
-
   <div class="current-stats">
     <div>
       <div class="current-stats__value"><%out.println(finaltempmax+"°c"); %></div>
